@@ -19,7 +19,7 @@ fetch(url)
     console.log(objectData.resultset);
     objectData.resultset.map((values) => {
       tableData += `
-    <tr>
+    <tr class="tr-table-body">
       <td>${values.name}</td>
       <td>${values.zip} ${values.city} - ${values.country}</td>
       <td>Jobs: ${values.jobs}</td>

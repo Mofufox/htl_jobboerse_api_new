@@ -35,14 +35,15 @@
   padding: 0 5px;
 }
 
-.go-button {
+.middle-button {
   padding: 5px 10px;
   background: #13a086;
   color: #fff;
   border: none;
   cursor: pointer;
+  border-radius: 4px;
 }
 
-.go-button:hover {
+.middle-button:hover {
   background-color: #45b9a4;
 }

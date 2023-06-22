@@ -16,11 +16,12 @@ function updateTable(pageIndex) {
       let tableData = "";
       objectData.resultset.map((values) => {
         tableData += `
-          <tr>
-            <td>${values.name}</td>
-            <td>${values.zip} ${values.city} - ${values.country}</td>
-            <td>Jobs: ${values.jobs}</td>
-          </tr>`;
+        <tr class="tr-table-body">
+        <td>${values.name}</td>
+        <td>${values.zip} ${values.city} - ${values.country}</td>
+        <td>Jobs: ${values.jobs}</td>
+        <td><button>More indo</button></td>
+      </tr>`;
       });
       const tableBody = document.getElementById("table-body");
       tableBody.innerHTML = tableData;
