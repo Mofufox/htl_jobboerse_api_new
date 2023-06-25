@@ -9,40 +9,30 @@
       rel="stylesheet"
       integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
       crossorigin="anonymous"
-      />
-      <script src="./script/api.js" defer></script>
-      <script src="./script/pagnation.js" defer></script>
-      <link rel="stylesheet" href="./styles/styles.css" />
-      <link rel="stylesheet" href="./styles/main.css" />
-      <link rel="stylesheet" href="./styles/pagnation.css" />
-      <link rel="stylesheet" href="./styles/api.css" />
-    <style>
-      /* .square-input {
-        width: 50px;
-        height: 50px;
-        text-align: center;
-        padding: 0;
-      } */
-    </style>
+    />
+    <script src="./script/api.js" defer></script>
+    <script src="./script/pagnation.js" defer></script>
+    <script src="./script/more-info.js" defer></script>
+    <link rel="stylesheet" href="./styles/styles.css" />
+    <link rel="stylesheet" href="./styles/main.css" />
+    <link rel="stylesheet" href="./styles/pagnation.css" />
+    <link rel="stylesheet" href="./styles/api.css" />
   </head>
   <body>
     <main>
       <div class="container">
-        <h1>HTL Braunau - Jobmarket</h1>
+        <header>
+          <h1>HTL Braunau - Jobmarket</h1>
+          <ol class="names"></ol>
+        </header>
         <table class="table">
-          <!-- <thead class="table-dark">
-            <tr class="tr-1">
-              <th scope="col">Firmenname</th>
-              <th scope="col">Anschrift</th>
-              <th scope="col">Anzahl der Jobs</th>
-              <th scope="col">More Info</th>
-            </tr>
-          </thead> -->
           <tbody id="table-body"></tbody>
+          <ul class="ul-tbody"></ul>
         </table>
       </div>
     </main>
 
+    <!-- pagnation -->
     <footer>
       <nav class="pagination-nav">
         <ul class="pagination">

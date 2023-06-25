@@ -47,3 +47,15 @@
 .middle-button:hover {
   background-color: #45b9a4;
 }
+
+.tr-table-body button {
+  padding: 5px 10px;
+  background: #13a086;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.tr-table-body button:hover {
+  background-color: #45b9a4;
+}

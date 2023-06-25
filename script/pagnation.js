@@ -20,7 +20,7 @@ function updateTable(pageIndex) {
         <td>${values.name}</td>
         <td>${values.zip} ${values.city} - ${values.country}</td>
         <td>Jobs: ${values.jobs}</td>
-        <td><button>More indo</button></td>
+        <td><button class="more-info-btn">More info</button></td>
       </tr>`;
       });
       const tableBody = document.getElementById("table-body");
