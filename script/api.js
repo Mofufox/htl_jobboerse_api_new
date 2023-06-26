@@ -1,65 +1,67 @@
-// // // https://www.youtube.com/watch?v=vvjaRIM4Bjs
+const quantityOfCompaniesPerSite = 10; 
+let pageIndex = 0; 
 
-let objectDataCompanies;
+function updateTable(pageIndex) {
+  const url =
+    "https://corsproxy.io/?" +
+    encodeURIComponent(
+      `https://jobboerse.htl-braunau.at/htl_job_api.php?cmd=getcpylist&count=${quantityOfCompaniesPerSite}&from=${pageIndex * quantityOfCompaniesPerSite}&maxage=300`
+    );
 
-const urlCompanies =
-  "https://corsproxy.io/?" +
-  encodeURIComponent(
-    "https://jobboerse.htl-braunau.at/htl_job_api.php?cmd=getcpylist&count=10&maxage=300"
-    // "https://jobboerse.htl-braunau.at/htl_job_api.php?cmd=getcpysingle&company_id=1"
-  );
+  fetch(url)
+    .then((data) => {
+      return data.json();
+    })
+    .then((objectData) => {
+      let tableData = "";
+      objectData.resultset.map((values) => {
+        tableData += `
+        <tr class="tr-table-body">
+        <td>${values.name}</td>
+        <td>${values.zip} ${values.city} - ${values.country}</td>
+        <td>Jobs: ${values.jobs}</td>
+        <td><button class="more-info-btn">More info</button></td>
+        <ul class="ul-opened-by-button"></ul>
+      </tr>`;
+      });
+      const tableBody = document.getElementById("table-body");
+      tableBody.innerHTML = tableData;
+    })
+    .catch((error) => console.log(error));
+}
 
-fetch(urlCompanies)
-  .then((data) => {
-    return data.json(); // converted to object
-  })
-  .then((objectData) => {
-    objectDataCompanies = objectData.resultset;
-    console.log(objectDataCompanies);
-    console.log(objectDataCompanies.length);
+function handlePageClick(pageIndex) {
+  updateTable(pageIndex);
+}
 
-    // Second fetch
-    for (let i = 0; i < objectDataCompanies.length; i++) {
-      let company_id = objectDataCompanies[i].company_id;
+function previousPage() {
+  if (pageIndex > 0) {
+    pageIndex--;
+    updateTable(pageIndex);
+  }
+}
 
-      const urlCompany =
-        "https://corsproxy.io/?" +
-        encodeURIComponent(
-          // "https://jobboerse.htl-braunau.at/htl_job_api.php?cmd=getcpylist&count=10&maxage=300"
-          `https://jobboerse.htl-braunau.at/htl_job_api.php?cmd=getcpysingle&company_id=${company_id}`
-        );
+function nextPage() {
+  pageIndex++;
+  updateTable(pageIndex);
+}
 
-      fetch(urlCompany)
-        .then((data) => {
-          return data.json(); // converted to object
-        })
-        .then((objectData) => {
-          // console.log(objectData);
-          console.log(objectData.result);
-          const namesElement = document.querySelector(".names");
-          const liElement = document.createElement("li");
-          console.log(objectData.result.name);
+document.addEventListener("DOMContentLoaded", function () {
+  updateTable(pageIndex);
 
-          function compareNumbers(a, b) {
-            return a - b;
-          }
-          
-          const sortedNr = objectDataCompanies[i].nr.sort(compareNumbers);
-          console.log();
-          for (let i = 0; i < objectDataCompanies.length; i++) {
-            console.log(objectDataCompanies[i].nr);
-            console.log(sortedNr);
-            if (i === objectDataCompanies[i].nr) {
-              // namesElement.innerHTML = objectData.result.name;
-              namesElement.appendChild(liElement);
-              liElement.innerHTML = objectData.result.name;
-            }
-            // const img = document.createElement("img");
-            // img.src = "objectDataCompany.result.image";
-            // pictureElement.appendChild(img);
-          }
-        })
-        .catch((error) => console.log(error));
-    }
-  })
-  .catch((error) => console.log(error));
+  const pageLinks = document.querySelectorAll(".page-link");
+  pageLinks.forEach((link, index) => {
+    link.addEventListener("click", function () {
+      handlePageClick(index);
+    });
+  });
+
+  const previousButton = document.getElementById("previous-button");
+  previousButton.addEventListener("click", previousPage);
+
+  const nextButton = document.getElementById("next-button");
+  nextButton.addEventListener("click", nextPage);
+});
+
+
+
