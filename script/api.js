@@ -30,21 +30,21 @@ function updateTable(pageIndex) {
     .catch((error) => console.log(error));
 }
 
-function handlePageClick(pageIndex) {
-  updateTable(pageIndex);
-}
+// function handlePageClick(pageIndex) {
+//   updateTable(pageIndex);
+// }
 
-function previousPage() {
-  if (pageIndex > 0) {
-    pageIndex--;
-    updateTable(pageIndex);
-  }
-}
+// function previousPage() {
+//   if (pageIndex > 0) {
+//     pageIndex--;
+//     updateTable(pageIndex);
+//   }
+// }
 
-function nextPage() {
-  pageIndex++;
-  updateTable(pageIndex);
-}
+// function nextPage() {
+//   pageIndex++;
+//   updateTable(pageIndex);
+// }
 
 document.addEventListener("DOMContentLoaded", function () {
   updateTable(pageIndex);

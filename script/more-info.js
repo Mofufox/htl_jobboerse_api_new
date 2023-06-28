@@ -38,8 +38,6 @@ fetch(urlCompanies)
 
             const values = objectData.result;
             for (let i = 0; i < objectDataCompanies.length; i++) {
-
-              
               ulOpenedByButton.appendChild(liElement).innerHTML = 
 
               `

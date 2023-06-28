@@ -10,10 +10,13 @@
       integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
       crossorigin="anonymous"
     />
-    <script src="./script/api.js" defer></script>
-    <script src="./script/more-info.js" defer></script>
+    <!-- <script src="./script/api.js" defer></script> -->
+    <!-- <script src="./script/api-new.js" defer></script> -->
+    <!-- <script src="./script/more-info.js" defer></script> -->
+    <script src="./script/pagination.js" defer></script>
     <link rel="stylesheet" href="./styles/api.css" />
     <link rel="stylesheet" href="./styles/styles.css" />
+    <link rel="stylesheet" href="./styles/pagination.css" />
   </head>
   <body>
     <main>
@@ -29,8 +32,23 @@
       </div>
     </main>
 
+    <div class="container-pagination">
+      <div class="pagination">
+        <button class="prev-btn"><img src="img/arrow.png" alt="" /> prev</button>
+        <ul>
+          <li class="link active" value="1">1</li>
+          <li class="link" value="2">2</li>
+          <li class="link" value="3">3</li>
+          <li class="link" value="4">4</li>
+          <li class="link" value="5">5</li>
+          <li class="link" value="6">6</li>
+        </ul>
+        <button class="next-btn">next <img src="img/arrow.png" alt="" /></button>
+      </div>
+    </div>
+
     <!-- pagnation -->
-    <footer>
+    <!-- <footer>
       <nav class="pagination-nav">
         <ul class="pagination">
           <li class="page-item" id="previous-button">
@@ -49,6 +67,6 @@
           </li>
         </ul>
       </nav>
-    </footer>
+    </footer> -->
   </body>
 </html>
