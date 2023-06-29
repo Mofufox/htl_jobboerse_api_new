@@ -1,4 +1,4 @@
-const quantityOfCompaniesPerSite = 10;
+const quantityOfCompaniesPerSite = 100;
 let quantityOfCompanies = 0;
 let pageIndex = 1;
 
@@ -49,17 +49,48 @@ function updateTable(pageIndex) {
         console.log("Page index: " + pageIndex);
         tableData += `
           <tr class="tr-table-body">
-          <td>${values.name}</td>
-          <td>${values.zip} ${values.city} - ${values.country}</td>
-          <td>Jobs: ${values.jobs}</td>
-          <td><button class="more-info-btn">More info</button></td>
-          <ul class="ul-opened-by-button"></ul>
-        </tr>`;
+            <td>${values.name}</td>
+            <td>${values.zip} ${values.city} - ${values.country}</td>
+            <td>Jobs: ${values.jobs}</td>
+            <td><button class="more-info-btn" data-moreinfobtn="${values.nr}">More info</button></td>
+          </tr>
+
+          <tr class="a" style="position:relative">
+            <th>Name Ariel gggg gggg</th>
+            <td>Name ddddddddddddddddddd</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr class="a" style="position:relative">
+            <th>Name Ariel gggg gggg</th>
+            <td>Name ddddddddddddddddddd</td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tr>
+          <tr class="tr-more-info">
+            <td>Name: ${values.name}</td>
+            <td>Szabó</td>
+          </tr>
+
+          `;
       });
+
+
+      // <ul class="ul-opened-by-button"><li>Ariel</li></ul>
       const tableBody = document.getElementById("table-body");
       tableBody.innerHTML = tableData;
     })
     .catch((error) => console.log(error));
+}
+
+const moreInfoBtnElements = document.querySelectorAll(".more-info-btn");
+console.log(moreInfoBtnElements);
+
+for (moreInfoBtnEl of moreInfoBtnElements) {
+  moreInfoBtnEl.addEventListener("click", (event) => {
+    const trTableBodyElement = document.querySelector(".tr-table-body");
+  });
 }
 
 updateTable(pageIndex);
@@ -153,7 +184,7 @@ middleButtonElement.addEventListener("click", () => {
     alert("Die erste Seite hat die Nummer 1!");
 
     console.log("Page index kleiner: " + pageIndex);
-  
+
     // updateTable(1);
     // paginationInputElement.value = 1;
     location.reload();
