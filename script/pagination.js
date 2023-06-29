@@ -31,7 +31,7 @@ function updateTable(pageIndex) {
     })
     .then((objectData) => {
       quantityOfCompanies = objectData.size;
-      // console.log("Quantity of companies: " + quantityOfCompanies);
+      console.log("Quantity of companies: " + quantityOfCompanies);
     })
     .catch((error) => console.log(error));
 
@@ -66,48 +66,103 @@ updateTable(pageIndex);
 
 // pagination
 
-let linkElements = document.getElementsByClassName("link");
+// let linkElements = document.getElementsByClassName("link");
 const prevBtnElement = document.querySelector(".prev-btn");
 const nextBtnElement = document.querySelector(".next-btn");
+const middleButtonElement = document.querySelector(".middle-button");
+const paginationInputElement = document.getElementById("pagination-input");
+
+console.log(pageIndex);
+
+// pageIndex: 1, 11, 21, 31, 41, 51, 61, 71, 81
+//      page: 1, 2,  3,  4,  5,  6,  7,  8,  9
+
+let maxPageNumber;
+
+function getPageNumber(pageIndex) {
+  // Determine the page number based on the pageIndex
+  let maxPageNumber = Math.ceil(
+    quantityOfCompanies / quantityOfCompaniesPerSite
+  );
+  if (pageIndex === 1) {
+    paginationInputElement.value = maxPageNumber;
+    return;
+  }
+  let pageNumber = Math.ceil(pageIndex / quantityOfCompaniesPerSite);
+  paginationInputElement.value = pageNumber;
+}
 
 prevBtnElement.addEventListener("click", () => {
+  // if ((paginationInputElement.value = 0)) {
+  //   pageIndex = Math.ceil(quantityOfCompanies / 10) * 10 - 9;
+  //   console.log("Pageindex:" + pageIndex);
+  //   updateTable(pageIndex);
+  //   getPageNumber(pageIndex);
+  // }
+
+  if (pageIndex === 11) {
+    pageIndex = pageIndex - 10;
+    updateTable(pageIndex);
+    paginationInputElement.value = 1;
+    return;
+  }
+
   if (pageIndex > 1) {
     pageIndex -= 10;
     updateTable(pageIndex);
+    getPageNumber(pageIndex);
   } else {
-    alert("Sie befinden sich auf der ersten Seite!");
+    getPageNumber(1);
+    pageIndex = Math.ceil(quantityOfCompanies / 10) * 10 - 9;
+    console.log("Pageindex:" + pageIndex);
+    updateTable(pageIndex);
   }
 });
 
 nextBtnElement.addEventListener("click", () => {
-  if (pageIndex < quantityOfCompanies) {
+  if (pageIndex < Math.floor(quantityOfCompanies / 10) * 10 + 1) {
     pageIndex += 10;
-    console.log("Page index: " + pageIndex);
+    console.log("Page index kleiner: " + pageIndex);
     updateTable(pageIndex);
   } else {
-    alert("Sie befinden sich auf der letzten Seite!");
+    pageIndex = 1;
+    console.log("Page index gleich: " + pageIndex);
+    updateTable(pageIndex);
   }
+
+  // if (
+  //   pageIndex >= Math.floor(quantityOfCompanies / 10) * 10 &&
+  //   pageIndex < Math.floor(quantityOfCompanies / 10) * 10
+  // ) {
+  //   pageIndex = Math.floor(quantityOfCompanies / 10) * 10 + 1;
+  //   updateTable(pageIndex);
+  // }
 });
 
-const middleButtonElement = document.querySelector(".middle-button");
-
 middleButtonElement.addEventListener("click", () => {
-  const paginationInputElementValue = parseInt(document.getElementById("pagination-input").value);
+  let paginationInputElementValue = parseInt(paginationInputElement.value);
 
-  // 1, 11, 21, 31, 41, 51, 61, 71
   pageIndex = paginationInputElementValue;
 
   if (paginationInputElementValue > 1) {
-    pageIndex = (paginationInputElementValue * 10) + 1 - 10;
+    pageIndex = paginationInputElementValue * 10 + 1 - 10;
   }
 
   if (paginationInputElementValue === 0) {
     alert("Die erste Seite hat die Nummer 1!");
+    paginationInputElement.value = 1;
     return;
   }
 
-  if (paginationInputElementValue > 9) {
-    alert("Es gibt nur 9 Seiten!");
+  // let page = Math.ceil(quantityOfCompanies / quantityOfCompaniesPerSite);
+
+  if (
+    paginationInputElementValue >
+    Math.ceil(quantityOfCompanies / quantityOfCompaniesPerSite)
+  ) {
+    maxPageNumber = Math.ceil(quantityOfCompanies / quantityOfCompaniesPerSite);
+    alert(`Es gibt nur ${maxPageNumber} Seiten!`);
+    paginationInputElement.value = maxPageNumber;
     return;
   }
   updateTable(pageIndex);
