@@ -1,22 +1,39 @@
 const quantityOfCompaniesPerSite = 10;
-let pageIndex = 0;
+let quantityOfCompanies = 0;
+let pageIndex = 1;
 
 function updateTable(pageIndex) {
+  // const url =
+  // "https://corsproxy.io/?" +
+  // encodeURIComponent(
+  //   `https://jobboerse.htl-braunau.at/htl_job_api.php?cmd=getcpylist&count=${quantityOfCompaniesPerSite}&from=1&maxage=300`
+  // );
+
+  // Erste Seite muss mit 1 anfangen
+  // Zweite Seite muss mit 11 anfangen
+
   const url =
     "https://corsproxy.io/?" +
     encodeURIComponent(
-      `https://jobboerse.htl-braunau.at/htl_job_api.php?cmd=getcpylist&count=${quantityOfCompaniesPerSite}&from=${
-        pageIndex * quantityOfCompaniesPerSite
-      }&maxage=300`
+      `https://jobboerse.htl-braunau.at/htl_job_api.php?cmd=getcpylist&count=${quantityOfCompaniesPerSite}&from=${pageIndex}&maxage=300`
     );
 
-  // const urlQuantityOfCompanies =
-  // "https://corsproxy.io/?" +
-  // encodeURIComponent(
-  //   `https://jobboerse.htl-braunau.at/htl_job_api.php?cmd=getcpylist&count=${quantityOfCompaniesPerSite}&from=${
-  //     pageIndex * quantityOfCompaniesPerSite
-  //   }&maxage=300`
-  // );
+  const urlQuantityOfCompanies =
+    "https://corsproxy.io/?" +
+    encodeURIComponent(
+      `https://jobboerse.htl-braunau.at/htl_job_api.php?cmd=getcpysize&maxage=300`
+    );
+
+  //fetch quantityOfCompanies
+  fetch(urlQuantityOfCompanies)
+    .then((data) => {
+      return data.json();
+    })
+    .then((objectData) => {
+      quantityOfCompanies = objectData.size;
+      // console.log("Quantity of companies: " + quantityOfCompanies);
+    })
+    .catch((error) => console.log(error));
 
   fetch(url)
     .then((data) => {
@@ -24,9 +41,12 @@ function updateTable(pageIndex) {
     })
     .then((objectData) => {
       // console.log(objectData);
-      console.log(objectData.resultset);
+      // console.log(objectData.resultset);
       let tableData = "";
       objectData.resultset.map((values) => {
+        // console.log(values);
+        console.log(values.nr + "." + values.name);
+        console.log("Page index: " + pageIndex);
         tableData += `
           <tr class="tr-table-body">
           <td>${values.name}</td>
@@ -50,74 +70,45 @@ let linkElements = document.getElementsByClassName("link");
 const prevBtnElement = document.querySelector(".prev-btn");
 const nextBtnElement = document.querySelector(".next-btn");
 
-// let currentValue = 1;
-
-// for (lElement of linkElements) {
-//   lElement.addEventListener("click", (event) => {
-//     for (lElement of linkElements) {
-//       lElement.classList.remove("active");
-//     }
-//     event.target.classList.add("active");
-//     currentValue = event.target.value;
-//   });
-// }
-
 prevBtnElement.addEventListener("click", () => {
-  if (pageIndex > 0) {
-    // for (lElement of linkElements) {
-    //   lElement.classList.remove("active");
-    // }
-    // TODO: Page index
-    pageIndex--;
+  if (pageIndex > 1) {
+    pageIndex -= 10;
     updateTable(pageIndex);
-    // linkElements[currentValue - 1].classList.add("active");
-    // currentValue = pageIndex - 1;
-    // currentValue--;
+  } else {
+    alert("Sie befinden sich auf der ersten Seite!");
   }
 });
 
 nextBtnElement.addEventListener("click", () => {
-  if (pageIndex < 100) {
-    // linkElements.length unendliche zahl!!
-    // for (lElement of linkElements) {
-    //   lElement.classList.remove("active");
-    // }
-    // currentValue++;
-    // TODO: Page index
-    pageIndex++;
+  if (pageIndex < quantityOfCompanies) {
+    pageIndex += 10;
+    console.log("Page index: " + pageIndex);
     updateTable(pageIndex);
-    // linkElements[currentValue - 1].classList.add("active");
-    // currentValue++;
-    // currentValue = pageIndex;
+  } else {
+    alert("Sie befinden sich auf der letzten Seite!");
   }
 });
 
-// fetch: QuantityOfCompanies
+const middleButtonElement = document.querySelector(".middle-button");
 
-const url2 =
-  "https://corsproxy.io/?" +
-  encodeURIComponent(
-    `https://jobboerse.htl-braunau.at/htl_job_api.php?cmd=getcpysize&maxage=300`
-  );
+middleButtonElement.addEventListener("click", () => {
+  const paginationInputElementValue = parseInt(document.getElementById("pagination-input").value);
 
-fetch(url2)
-  .then((data) => {
-    return data.json();
-  })
-  .then((objectData) => {
-    console.log("Quantity of companies: " + objectData.size);
-    let tableData = "";
-    objectData.resultset.map((values) => {
-      tableData += `
-      <tr class="tr-table-body">
-      <td>${values.name}</td>
-      <td>${values.zip} ${values.city} - ${values.country}</td>
-      <td>Jobs: ${values.jobs}</td>
-      <td><button class="more-info-btn">More info</button></td>
-      <ul class="ul-opened-by-button"></ul>
-      </tr>`;
-      });
-    const tableBody = document.getElementById("table-body");
-    tableBody.innerHTML = tableData;
-  })
-  .catch((error) => console.log(error));
+  // 1, 11, 21, 31, 41, 51, 61, 71
+  pageIndex = paginationInputElementValue;
+
+  if (paginationInputElementValue > 1) {
+    pageIndex = (paginationInputElementValue * 10) + 1 - 10;
+  }
+
+  if (paginationInputElementValue === 0) {
+    alert("Die erste Seite hat die Nummer 1!");
+    return;
+  }
+
+  if (paginationInputElementValue > 9) {
+    alert("Es gibt nur 9 Seiten!");
+    return;
+  }
+  updateTable(pageIndex);
+});
