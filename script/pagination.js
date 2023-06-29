@@ -120,23 +120,24 @@ prevBtnElement.addEventListener("click", () => {
 });
 
 nextBtnElement.addEventListener("click", () => {
+  if (pageIndex === 81) {
+    pageIndex = 1;
+    updateTable(pageIndex);
+    paginationInputElement.value = 1;
+    return;
+  }
+
   if (pageIndex < Math.floor(quantityOfCompanies / 10) * 10 + 1) {
     pageIndex += 10;
     console.log("Page index kleiner: " + pageIndex);
     updateTable(pageIndex);
+    getPageNumber(pageIndex);
   } else {
     pageIndex = 1;
     console.log("Page index gleich: " + pageIndex);
     updateTable(pageIndex);
+    getPageNumber(pageIndex);
   }
-
-  // if (
-  //   pageIndex >= Math.floor(quantityOfCompanies / 10) * 10 &&
-  //   pageIndex < Math.floor(quantityOfCompanies / 10) * 10
-  // ) {
-  //   pageIndex = Math.floor(quantityOfCompanies / 10) * 10 + 1;
-  //   updateTable(pageIndex);
-  // }
 });
 
 middleButtonElement.addEventListener("click", () => {
@@ -150,11 +151,14 @@ middleButtonElement.addEventListener("click", () => {
 
   if (paginationInputElementValue === 0) {
     alert("Die erste Seite hat die Nummer 1!");
-    paginationInputElement.value = 1;
+
+    console.log("Page index kleiner: " + pageIndex);
+  
+    // updateTable(1);
+    // paginationInputElement.value = 1;
+    location.reload();
     return;
   }
-
-  // let page = Math.ceil(quantityOfCompanies / quantityOfCompaniesPerSite);
 
   if (
     paginationInputElementValue >
