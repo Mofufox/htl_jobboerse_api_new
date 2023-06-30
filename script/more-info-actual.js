@@ -28,19 +28,10 @@ fetch(urlCompanies)
           return data.json(); // converted to object
         })
         .then((objectData) => {
-          const liElement = document.createElement("li");
-
-          const moreInfoBtn = document.querySelector(".more-info-btn");
-
-          moreInfoBtn.addEventListener("click", () => {
-            const ulOpenedByButton = document.querySelector(".ul-opened-by-button");
-            ulOpenedByButton.style.listStyle = "none";
-
+        //   moreInfoBtn.addEventListener("click", () => {
             const values = objectData.result;
             for (let i = 0; i < objectDataCompanies.length; i++) {
-              ulOpenedByButton.appendChild(liElement).innerHTML = 
-
-              `
+              ulOpenedByButton.appendChild(liElement).innerHTML = `
               <table>
               <tbody>             
                <tr class="tr-table-body">
@@ -56,10 +47,9 @@ fetch(urlCompanies)
               </tr>
               </tbody>
               </table>
-              `
-              ;
-            }         
-          });
+              `;
+            }
+        //   });
         })
         .catch((error) => console.log(error));
     }

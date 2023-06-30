@@ -3,16 +3,10 @@ let quantityOfCompanies = 0;
 let pageIndex = 1;
 
 function updateTable(pageIndex) {
-  // const url =
-  // "https://corsproxy.io/?" +
-  // encodeURIComponent(
-  //   `https://jobboerse.htl-braunau.at/htl_job_api.php?cmd=getcpylist&count=${quantityOfCompaniesPerSite}&from=1&maxage=300`
-  // );
+  //      page: 1, 2,  3,  4,  5,  6,  7,  8,  9
+  // pageIndex: 1, 11, 21, 31, 41, 51, 61, 71, 81
 
-  // Erste Seite muss mit 1 anfangen
-  // Zweite Seite muss mit 11 anfangen
-
-  const url =
+  const urlCompanies =
     "https://corsproxy.io/?" +
     encodeURIComponent(
       `https://jobboerse.htl-braunau.at/htl_job_api.php?cmd=getcpylist&count=${quantityOfCompaniesPerSite}&from=${pageIndex}&maxage=300`
@@ -35,13 +29,15 @@ function updateTable(pageIndex) {
     })
     .catch((error) => console.log(error));
 
-  fetch(url)
+  fetch(urlCompanies)
     .then((data) => {
       return data.json();
     })
     .then((objectData) => {
       // console.log(objectData);
-      // console.log(objectData.resultset);
+      objectDataCompanies = objectData.resultset;
+      console.log(objectDataCompanies);
+
       let tableData = "";
       objectData.resultset.map((values) => {
         console.log(values.nr + "." + values.name);
@@ -63,31 +59,116 @@ function updateTable(pageIndex) {
       const moreInfoBtnElements = document.querySelectorAll(".more-info-btn");
       console.log(moreInfoBtnElements);
 
-      for (moreInfoBtnEl of moreInfoBtnElements) {
-        moreInfoBtnEl.addEventListener("click", (event) => {
-          const clickedButton = event.target;
+      // for (moreInfoBtnEl of moreInfoBtnElements) {
+      //   moreInfoBtnEl.addEventListener("click", (event) => {
+      //     const clickedButton = event.target;
 
-          const additionalRow = document.createElement("tr");
-          additionalRow.classList.add("additional-row");
+      //     const additionalRow = document.createElement("tr");
+      //     additionalRow.classList.add("additional-row");
 
-          const thElement = document.createElement("th");
-          const tdElement1 = document.createElement("td");
-          const tdElement2 = document.createElement("td");
-          const tdElement3 = document.createElement("td");
+      //     const thElement = document.createElement("th");
+      //     const tdElement1 = document.createElement("td");
+      //     const tdElement2 = document.createElement("td");
+      //     const tdElement3 = document.createElement("td");
 
-          // tdElement.setAttribute("colspan", "4");
-          thElement.textContent = `NAME`;
-          tdElement1.textContent = "HALOOOOOO";
-          tdElement2.textContent = "";
-          tdElement3.textContent = "";
+      //     // tdElement.setAttribute("colspan", "4");
+      //     thElement.textContent = `NAME`;
+      //     tdElement1.textContent = "HALOOOOOO";
+      //     tdElement2.textContent = "";
+      //     tdElement3.textContent = "";
 
-          additionalRow.appendChild(thElement);
-          additionalRow.appendChild(tdElement1);
-          additionalRow.appendChild(tdElement2);
-          additionalRow.appendChild(tdElement3);
+      //     additionalRow.appendChild(thElement);
+      //     additionalRow.appendChild(tdElement1);
+      //     additionalRow.appendChild(tdElement2);
+      //     additionalRow.appendChild(tdElement3);
 
-          console.log(clickedButton);
-          clickedButton.parentElement.parentElement.insertAdjacentElement("afterend", additionalRow);
+      //     console.log(clickedButton);
+      //     clickedButton.parentElement.parentElement.insertAdjacentElement(
+      //       "afterend",
+      //       additionalRow
+      //     );
+
+
+
+
+
+          // Last fetch
+          for (let i = 0; i < objectDataCompanies.length; i++) {
+            let company_id = objectDataCompanies[i].company_id;
+
+            const urlCompany =
+              "https://corsproxy.io/?" +
+              encodeURIComponent(
+                `https://jobboerse.htl-braunau.at/htl_job_api.php?cmd=getcpysingle&company_id=${company_id}`
+              );
+
+            fetch(urlCompany)
+              .then((data) => {
+                return data.json(); // converted to object
+              })
+              .then((objectData) => {
+                //   moreInfoBtn.addEventListener("click", () => {
+                const values = objectData.result;
+                console.log(values); //DAS passt noch!!
+
+
+
+                for (moreInfoBtnEl of moreInfoBtnElements) {
+                  moreInfoBtnEl.addEventListener("click", (event) => {
+                    const clickedButton = event.target;
+          
+                    const additionalRow = document.createElement("tr");
+                    additionalRow.classList.add("additional-row");
+          
+                    const thElement = document.createElement("th");
+                    const tdElement1 = document.createElement("td");
+                    const tdElement2 = document.createElement("td");
+                    const tdElement3 = document.createElement("td");
+          
+                    // tdElement.setAttribute("colspan", "4");
+                    thElement.textContent = "a";
+                    tdElement1.textContent = "HALOOOOOO";
+                    tdElement2.textContent = "";
+                    tdElement3.textContent = "";
+          
+                    additionalRow.appendChild(thElement);
+                    additionalRow.appendChild(tdElement1);
+                    additionalRow.appendChild(tdElement2);
+                    additionalRow.appendChild(tdElement3);
+          
+                    console.log(clickedButton);
+                    clickedButton.parentElement.parentElement.insertAdjacentElement(
+                      "afterend",
+                      additionalRow
+                    );
+
+
+
+
+
+              //   for (let i = 0; i < objectDataCompanies.length; i++) {
+              //     ulOpenedByButton.appendChild(liElement).innerHTML = `
+              // <table>
+              // <tbody>             
+              //  <tr class="tr-table-body">
+              //  <td> ${values.address}</td>
+              //  <td> ${values.zip} ${values.city} - ${values.country}</td>
+              //  <td> ${values.company_id}</td>
+              //  <td> ${values.companygroup_id}</td>
+              //  <td> ${values.email} ${values.fax}</td>
+              //  <td> ${values.image}</td>
+              //  <td> ${values.name}</td>
+              //  <td> ${values.phone}</td>
+              //  <td> ${values.www}</td>
+              // </tr>
+              // </tbody>
+              // </table>
+              // `;
+              //   }
+                //   });
+              })
+              .catch((error) => console.log(error));
+          }
         });
       }
     })
@@ -103,8 +184,6 @@ const prevBtnElement = document.querySelector(".prev-btn");
 const nextBtnElement = document.querySelector(".next-btn");
 const middleButtonElement = document.querySelector(".middle-button");
 const paginationInputElement = document.getElementById("pagination-input");
-
-console.log(pageIndex);
 
 // pageIndex: 1, 11, 21, 31, 41, 51, 61, 71, 81
 //      page: 1, 2,  3,  4,  5,  6,  7,  8,  9
