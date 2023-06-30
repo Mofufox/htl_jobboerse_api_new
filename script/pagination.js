@@ -133,7 +133,6 @@ function updateTable(pageIndex) {
                   additionalRow.appendChild(tdElement3);
 
                   additionalRows.push(additionalRow);
-                  // thElement.style.background = "blue";
                 }
 
                 additionalRows.reverse().forEach((row) => {
