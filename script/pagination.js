@@ -31,7 +31,7 @@ function updateTable(pageIndex) {
     })
     .then((objectData) => {
       quantityOfCompanies = objectData.size;
-      console.log("Quantity of companies: " + quantityOfCompanies);
+      // console.log("Quantity of companies: " + quantityOfCompanies);
     })
     .catch((error) => console.log(error));
 
@@ -44,7 +44,6 @@ function updateTable(pageIndex) {
       // console.log(objectData.resultset);
       let tableData = "";
       objectData.resultset.map((values) => {
-        // console.log(values);
         console.log(values.nr + "." + values.name);
         console.log("Page index: " + pageIndex);
         tableData += `
@@ -52,45 +51,47 @@ function updateTable(pageIndex) {
             <td>${values.name}</td>
             <td>${values.zip} ${values.city} - ${values.country}</td>
             <td>Jobs: ${values.jobs}</td>
-            <td><button class="more-info-btn" data-moreinfobtn="${values.nr}">More info</button></td>
+            <td><button class="more-info-btn" value="${values.nr}" data-moreinfobtn="${values.nr}">More info</button></td>
           </tr>
-
-          <tr class="a" style="position:relative">
-            <th>Name Ariel gggg gggg</th>
-            <td>Name ddddddddddddddddddd</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr class="a" style="position:relative">
-            <th>Name Ariel gggg gggg</th>
-            <td>Name ddddddddddddddddddd</td>
-            <td></td>
-            <td></td>
-          </tr>
-        </tr>
-          <tr class="tr-more-info">
-            <td>Name: ${values.name}</td>
-            <td>Szabó</td>
-          </tr>
-
           `;
       });
-
 
       // <ul class="ul-opened-by-button"><li>Ariel</li></ul>
       const tableBody = document.getElementById("table-body");
       tableBody.innerHTML = tableData;
+
+      const moreInfoBtnElements = document.querySelectorAll(".more-info-btn");
+      console.log(moreInfoBtnElements);
+
+      for (moreInfoBtnEl of moreInfoBtnElements) {
+        moreInfoBtnEl.addEventListener("click", (event) => {
+          const clickedButton = event.target;
+
+          const additionalRow = document.createElement("tr");
+          additionalRow.classList.add("additional-row");
+
+          const thElement = document.createElement("th");
+          const tdElement1 = document.createElement("td");
+          const tdElement2 = document.createElement("td");
+          const tdElement3 = document.createElement("td");
+
+          // tdElement.setAttribute("colspan", "4");
+          thElement.textContent = `NAME`;
+          tdElement1.textContent = "HALOOOOOO";
+          tdElement2.textContent = "";
+          tdElement3.textContent = "";
+
+          additionalRow.appendChild(thElement);
+          additionalRow.appendChild(tdElement1);
+          additionalRow.appendChild(tdElement2);
+          additionalRow.appendChild(tdElement3);
+
+          console.log(clickedButton);
+          clickedButton.parentElement.parentElement.insertAdjacentElement("afterend", additionalRow);
+        });
+      }
     })
     .catch((error) => console.log(error));
-}
-
-const moreInfoBtnElements = document.querySelectorAll(".more-info-btn");
-console.log(moreInfoBtnElements);
-
-for (moreInfoBtnEl of moreInfoBtnElements) {
-  moreInfoBtnEl.addEventListener("click", (event) => {
-    const trTableBodyElement = document.querySelector(".tr-table-body");
-  });
 }
 
 updateTable(pageIndex);

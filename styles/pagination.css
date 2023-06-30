@@ -71,9 +71,3 @@ ul li.active {
   transform: rotate(180deg);
 }
 
-.a {
-  /* display: grid; */
-  /* display: block; */
-  /* grid-template-columns: 4fr 1fr 1fr 1fr 1fr; */
-  /* grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; */
-}
