@@ -71,3 +71,8 @@ ul li.active {
   transform: rotate(180deg);
 }
 
+.additional-row th, .additional-row td {
+  background: #e6fffc;
+}
+
+
