@@ -214,7 +214,7 @@ updateTable(pageIndex);
 // let linkElements = document.getElementsByClassName("link");
 const prevBtnElement = document.querySelector(".prev-btn");
 const nextBtnElement = document.querySelector(".next-btn");
-const middleButtonElement = document.querySelector(".middle-button");
+const middleButtonElement = document.querySelector(".middle-btn");
 const paginationInputElement = document.getElementById("pagination-input");
 
 // pageIndex: 1, 11, 21, 31, 41, 51, 61, 71, 81

@@ -161,25 +161,25 @@ function updateTable(pageIndex) {
                     if (isDataVisible) {
                       return;
                     }
-              
+
                     const additionalRow = document.createElement("tr");
                     additionalRow.classList.add("additional-row-jobs");
-              
+
                     const thElement = document.createElement("th");
                     const tdElement1 = document.createElement("td");
                     const tdElement2 = document.createElement("td");
                     const tdElement3 = document.createElement("td");
-              
+
                     thElement.textContent = `Job-Nr. ${jobIndex + 1}`;
                     tdElement1.textContent = job.title;
                     tdElement2.textContent = "";
                     tdElement3.textContent = "";
-              
+
                     additionalRow.appendChild(thElement);
                     additionalRow.appendChild(tdElement1);
                     additionalRow.appendChild(tdElement2);
                     additionalRow.appendChild(tdElement3);
-              
+
                     additionalRows.push(additionalRow);
                   });
 
@@ -207,10 +207,9 @@ updateTable(pageIndex);
 
 // pagination
 
-// let linkElements = document.getElementsByClassName("link");
 const prevBtnElement = document.querySelector(".prev-btn");
 const nextBtnElement = document.querySelector(".next-btn");
-const middleButtonElement = document.querySelector(".middle-button");
+const middleButtonElement = document.querySelector(".middle-btn");
 const paginationInputElement = document.getElementById("pagination-input");
 
 // pageIndex: 1, 11, 21, 31, 41, 51, 61, 71, 81
@@ -232,13 +231,6 @@ function getPageNumber(pageIndex) {
 }
 
 prevBtnElement.addEventListener("click", () => {
-  // if ((paginationInputElement.value = 0)) {
-  //   pageIndex = Math.ceil(quantityOfCompanies / 10) * 10 - 9;
-  //   console.log("Pageindex:" + pageIndex);
-  //   updateTable(pageIndex);
-  //   getPageNumber(pageIndex);
-  // }
-
   if (pageIndex === 11) {
     pageIndex = pageIndex - 10;
     updateTable(pageIndex);
@@ -281,8 +273,10 @@ nextBtnElement.addEventListener("click", () => {
 
 middleButtonElement.addEventListener("click", () => {
   let paginationInputElementValue = parseInt(paginationInputElement.value);
-
+  console.log(paginationInputElementValue);
+  
   pageIndex = paginationInputElementValue;
+  console.log(pageIndex);
 
   if (paginationInputElementValue > 1) {
     pageIndex = paginationInputElementValue * 10 + 1 - 10;
@@ -305,8 +299,10 @@ middleButtonElement.addEventListener("click", () => {
   ) {
     maxPageNumber = Math.ceil(quantityOfCompanies / quantityOfCompaniesPerSite);
     alert(`Es gibt nur ${maxPageNumber} Seiten!`);
-    paginationInputElement.value = maxPageNumber;
+    // paginationInputElement.value =  paginationInputElementValue;
+    location.reload();
     return;
   }
   updateTable(pageIndex);
+
 });
