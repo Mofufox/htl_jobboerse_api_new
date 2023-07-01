@@ -14,8 +14,8 @@
 .pagination {
   display: flex;
   align-items: center;
-  background: #fff;
-  color: #383838;
+  background: rgb(255, 255, 255);
+  color: rgb(56, 56, 56);
   padding: 10px 40px;
   border-radius: 6px;
 }
@@ -71,8 +71,14 @@ ul li.active {
   transform: rotate(180deg);
 }
 
-.additional-row th, .additional-row td {
-  background: #e6fffc;
+.additional-row th,
+.additional-row td {
+  /* background: #e6fffc; */
+  background: rgb(224, 255, 224);
 }
 
-
+.additional-row-jobs th,
+.additional-row-jobs td {
+  background: rgb(0, 0, 0);
+  color: #ffffff;
+}

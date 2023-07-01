@@ -82,125 +82,121 @@ function updateTable(pageIndex) {
               .then((data) => data.json())
               .then((jobsDataPerCompany) => {
                 console.log(jobsDataPerCompany);
-                jobsDataPerCompany = jobsDataPerCompany.result;
+                jobsDataPerCompany = jobsDataPerCompany.resultset;
                 console.log(jobsDataPerCompany);
                 return jobsDataPerCompany;
               });
           };
 
           const fetchJobsDataPerCompanyPromises = objectDataCompanies.map(
-            (company) => fetchJobsDataPerCompany(company.company_id)
+            (company) =>
+              fetchJobsDataPerCompany(company.company_id).catch(() => [])
           );
 
-          console.log(fetchJobsDataPerCompanyPromises);
-
           Promise.all(fetchJobsDataPerCompanyPromises).then(
-            (JobsDataPerCompanyArray) => {
-              console.log(JobsDataPerCompanyArray);
+            (jobsDataPerCompanyArray) => {
+              console.log(jobsDataPerCompanyArray);
 
-              let tableData = "";
-              objectDataCompanies.forEach((values, index) => {
-                console.log(values.nr + "." + values.country);
-                console.log("Page index: " + pageIndex);
-                tableData += `
-                <tr class="tr-table-body">
-                  <td>${values.name}</td>
-                  <td>${values.zip} ${values.city} - ${values.country}</td>
-                  <td>Jobs: ${values.jobs}</td>
-                  <td><button class="more-info-btn" value="${values.nr}" data-moreinfobtn="${values.nr}">More info</button></td>
-                </tr>
-                `;
+              moreInfoBtnElements.forEach((moreInfoBtnEl, index) => {
+                let isDataVisible = false; // Flag to track data visibility
+
+                moreInfoBtnEl.addEventListener("click", (event) => {
+                  const clickedButton = event.target;
+                  const buttonValue = clickedButton.value;
+
+                  const companyData = companyDataArray[index];
+                  const jobsDataPerCompany = jobsDataPerCompanyArray[index];
+
+                  // Process the companyData and jobsDataPerCompany here
+                  console.log(companyData);
+                  console.log(jobsDataPerCompany);
+
+                  const additionalRows = [];
+                  const labels = [
+                    "Address",
+                    "Company ID",
+                    "Companygroup ID",
+                    "Email",
+                    "Fax",
+                    "Image",
+                    "Name",
+                    "Phone",
+                    "Website",
+                  ];
+                  const fields = [
+                    `${companyData.address}`,
+                    `${companyData.company_id}`,
+                    `${companyData.companygroup_id}`,
+                    `${companyData.email}`,
+                    `${companyData.fax}`,
+                    `${companyData.image}`,
+                    `${companyData.name}`,
+                    `${companyData.phone}`,
+                    `${companyData.www}`,
+                  ];
+
+                  for (let i = 0; i < labels.length; i++) {
+                    const additionalRow = document.createElement("tr");
+                    additionalRow.classList.add("additional-row");
+
+                    const thElement = document.createElement("th");
+                    const tdElement1 = document.createElement("td");
+                    const tdElement2 = document.createElement("td");
+                    const tdElement3 = document.createElement("td");
+
+                    thElement.textContent = labels[i];
+                    tdElement1.textContent = fields[i];
+                    tdElement2.textContent = "";
+                    tdElement3.textContent = "";
+
+                    additionalRow.appendChild(thElement);
+                    additionalRow.appendChild(tdElement1);
+                    additionalRow.appendChild(tdElement2);
+                    additionalRow.appendChild(tdElement3);
+
+                    additionalRows.push(additionalRow);
+                  }
+
+                  jobsDataPerCompany.forEach((job, jobIndex) => {
+                    if (isDataVisible) {
+                      return;
+                    }
+              
+                    const additionalRow = document.createElement("tr");
+                    additionalRow.classList.add("additional-row-jobs");
+              
+                    const thElement = document.createElement("th");
+                    const tdElement1 = document.createElement("td");
+                    const tdElement2 = document.createElement("td");
+                    const tdElement3 = document.createElement("td");
+              
+                    thElement.textContent = `Job-Nr. ${jobIndex + 1}`;
+                    tdElement1.textContent = job.title;
+                    tdElement2.textContent = "";
+                    tdElement3.textContent = "";
+              
+                    additionalRow.appendChild(thElement);
+                    additionalRow.appendChild(tdElement1);
+                    additionalRow.appendChild(tdElement2);
+                    additionalRow.appendChild(tdElement3);
+              
+                    additionalRows.push(additionalRow);
+                  });
+
+                  additionalRows.reverse().forEach((row) => {
+                    if (isDataVisible) {
+                      return;
+                    }
+                    clickedButton.parentElement.parentElement.insertAdjacentElement(
+                      "afterend",
+                      row
+                    );
+                  });
+                  isDataVisible = true;
+                });
               });
             }
           );
-
-
-
-
-
-
-
-
-          moreInfoBtnElements.forEach((moreInfoBtnEl, index) => {
-            let isDataVisible = false; // Flag to track data visibility
-
-            moreInfoBtnEl.addEventListener("click", (event) => {
-              const clickedButton = event.target;
-              const buttonValue = clickedButton.value;
-
-              const companyData = companyDataArray[index];
-
-              // Process the companyData here
-              console.log(companyData);
-              console.log(companyData.address);
-              console.log(companyData.name);
-              console.log(companyData.phone);
-              console.log(companyData.www);
-              console.log(companyData.email);
-
-              const additionalRows = [];
-              const labels = [
-                "Address",
-                "Company ID",
-                "Companygroup ID",
-                "Email",
-                "Fax",
-                "Image",
-                "Name",
-                "Phone",
-                "Website",
-              ];
-              const fields = [
-                // `${companyData.zip} ${companyData.city} - ${companyData.country}`,
-                `${companyData.address}`,
-                `${companyData.company_id}`,
-                `${companyData.companygroup_id}`,
-                `${companyData.email}`,
-                `${companyData.fax}`,
-                `${companyData.image}`,
-                `${companyData.name}`,
-                `${companyData.phone}`,
-                `${companyData.www}`,
-                `${companyData.email}`,
-              ];
-
-              // console.log(company_id);
-              // console.log(`${companyData.companygroup_id}`);
-
-              for (let i = 0; i < labels.length; i++) {
-                const additionalRow = document.createElement("tr");
-                additionalRow.classList.add("additional-row");
-
-                const thElement = document.createElement("th");
-                const tdElement1 = document.createElement("td");
-                const tdElement2 = document.createElement("td");
-                const tdElement3 = document.createElement("td");
-
-                thElement.textContent = labels[i];
-                tdElement1.textContent = fields[i];
-                tdElement2.textContent = "";
-                tdElement3.textContent = "";
-
-                additionalRow.appendChild(thElement);
-                additionalRow.appendChild(tdElement1);
-                additionalRow.appendChild(tdElement2);
-                additionalRow.appendChild(tdElement3);
-
-                additionalRows.push(additionalRow);
-              }
-
-              additionalRows.reverse().forEach((row) => {
-                if (isDataVisible) {
-                  return;
-                }
-                clickedButton.parentElement.parentElement.insertAdjacentElement(
-                  "afterend",
-                  row
-                );
-              });
-              isDataVisible = true;
-            });
-          });
         })
         .catch((error) => console.log(error));
     })
