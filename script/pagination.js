@@ -1,6 +1,8 @@
 const quantityOfCompaniesPerSite = 10;
 let quantityOfCompanies = 0;
-let pageIndex = 1;
+let pageIndex = 1; //Ich muss mit 1 anfangen, nicht mit 0!
+// pageIndex: 1, 11, 21, 31, 41, 51, 61, 71, 81
+//      page: 1, 2,  3,  4,  5,  6,  7,  8,  9
 
 function updateTable(pageIndex) {
   const urlCompanies =
@@ -95,8 +97,6 @@ function updateTable(pageIndex) {
 
                   const companyData = companyDataArray[index];
                   const jobsDataPerCompany = jobsDataPerCompanyArray[index];
-
-                  // Process the companyData and jobsDataPerCompany here
 
                   const additionalRows = [];
                   const labels = [
@@ -200,9 +200,6 @@ const prevBtnElement = document.querySelector(".prev-btn");
 const nextBtnElement = document.querySelector(".next-btn");
 const middleButtonElement = document.querySelector(".middle-btn");
 const paginationInputElement = document.getElementById("pagination-input");
-
-// pageIndex: 1, 11, 21, 31, 41, 51, 61, 71, 81
-//      page: 1, 2,  3,  4,  5,  6,  7,  8,  9
 
 let maxPageNumber;
 
