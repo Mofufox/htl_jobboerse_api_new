@@ -21,12 +21,12 @@
   text-decoration: none;
   background: #13a086;
   color: rgb(255, 255, 255);
-  border: 1px solid #ccc;
+  border: 1px solid rgb(204, 204, 204);
   cursor: pointer;
 }
 
 .page-link:hover {
-  background: #ddd;
+  background: rgb(221, 221, 221);
 }
 
 .page-input {
@@ -37,24 +37,22 @@
 
 .tr-table-body button {
   padding: 5px 10px;
-  background: #13a086;
-  color: #fff;
+  background: rgb(19, 160, 134);
+  color: rgb(255, 255, 255);
   border: none;
   cursor: pointer;
   border-radius: 4px;
 }
 .tr-table-body button:hover {
-  background-color: #45b9a4;
+  background-color: rgb(69, 185, 164);
 }
 
 .additional-row th,
 .additional-row td {
-  /* background: #e6fffc; */
   background: rgb(224, 255, 224);
 }
 
 .additional-row-jobs th,
 .additional-row-jobs td {
-  background: rgb(0, 0, 0);
-  color: #ffffff;
+  background: rgb(239, 239, 239);
 }
